@@ -29,9 +29,15 @@ export async function GET(request: Request) {
         const queryParam = {
             username: searchParams.get('username')
         }
+        
 
         const result = UsernameQuerySchema.safeParse(queryParam);
         console.log(result,"line34");
+//         if (!result.success) {
+//   console.log(result.error.format()); // formatted and readable
+//   // or
+//   console.log(result.error.errors); // raw list of validation issues
+// }
 
         if (!result.success) {
             const usernameErrors = result.error.format().username?._errors || []
@@ -46,6 +52,7 @@ export async function GET(request: Request) {
         }
 
         const {username} = result.data
+        
 
        const existingVerifiedUser = await UserModel.findOne({username, isVerified:true})
 
@@ -61,10 +68,10 @@ export async function GET(request: Request) {
 
        return Response.json({
             success: true,
-            message: "Username is Unique"
+            message: "Username is unique"
         },
             {
-                status: 500
+                status: 200
             })
 
     } catch (error) {

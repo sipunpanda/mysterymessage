@@ -3,7 +3,6 @@ import UserModel from "@/model/user";
 import bcrypt from "bcryptjs"
 
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
-import { success } from "zod";
 
 
 export async function POST(request: Request) {
@@ -32,17 +31,17 @@ export async function POST(request: Request) {
                     {
                         success: false,
                         message: "Email Id is already taken"
-    
-                    },{status:400}
+
+                    }, { status: 400 }
                 )
             }
-            else{
-            const hashedPassword = await bcrypt.hash(password, 10)
-            existingUserVerifiedByEmail.username = username;
-            existingUserVerifiedByEmail.verifyCode = verifyCode;
-            existingUserVerifiedByEmail.password = hashedPassword;
-            existingUserVerifiedByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000);
-            await existingUserVerifiedByEmail.save()
+            else {
+                const hashedPassword = await bcrypt.hash(password, 10)
+                existingUserVerifiedByEmail.username = username;
+                existingUserVerifiedByEmail.verifyCode = verifyCode;
+                existingUserVerifiedByEmail.password = hashedPassword;
+                existingUserVerifiedByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000);
+                await existingUserVerifiedByEmail.save()
             }
         }
         else {
@@ -70,29 +69,29 @@ export async function POST(request: Request) {
             username,
             verifyCode
         )
-        if(!emailResponse.success){
- return Response.json(
+        if (!emailResponse.success) {
+            return Response.json(
                 {
                     success: false,
                     message: emailResponse.message
 
                 },
                 {
-                    status:500
+                    status: 500
                 }
             )
         }
 
         return Response.json(
-                {
-                    success: true,
-                    message: emailResponse.message
+            {
+                success: true,
+                message: emailResponse.message
 
-                },
-                {
-                    status:201
-                }
-            )
+            },
+            {
+                status: 201
+            }
+        )
 
     } catch (error) {
         console.error('Error registering user', error);
