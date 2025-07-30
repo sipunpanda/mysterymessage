@@ -43,7 +43,7 @@ const page = () => {
     const checkUsernameUnique = async () => {
       if (username) {
         setIsCheckingUsername(true)
-        setUsername('')
+        // setUsername('')
         try {
           console.log("line47",debouncedUsername);
           
@@ -70,21 +70,25 @@ const page = () => {
     setIsSubmitting(true)
 
     try {
+      console.log("jjj1", username);
       const response = await axios.post<ApiResponse>('/api/sign-up', data)
-
+      console.log("jjj2", username);
+      
       toast("Success", {
         description: response.data.message
       })
+      console.log("jjj3", username);
+      
       router.replace(`/verify/${username}`)
       setIsSubmitting(false)
 
     } catch (error) {
       console.log("Error in SignUp of User", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      const errorMessage = axiosError.response?.data.messages
+      const errorMessage = axiosError.response?.data.message
 
       toast("SignUp Failed", {
-        description: "errorMessage",
+        description: errorMessage,
       })
 
       setIsSubmitting(false)
