@@ -77,7 +77,7 @@ const page = () => {
       toast("Success", {
         description: response.data.message
       })
-      console.log("jjj3", username);
+
       
       router.replace(`/verify/${username}`)
       setIsSubmitting(false)
