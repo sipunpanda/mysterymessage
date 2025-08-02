@@ -15,7 +15,7 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from 'lucide-react';
-
+import { motion } from "framer-motion"
 
 const page = () => {
   const [username, setUsername] = useState('')
@@ -24,7 +24,7 @@ const page = () => {
   const [isCheckingUsername, setIsCheckingUsername] = useState(false)
 
   const debouncedUsername = useDebounceCallback(setUsername, 300)
-  toast("Event has been created.")
+  // toast("Event has been created.")
   const router = useRouter()
 
   //zod implementation
@@ -94,94 +94,125 @@ const page = () => {
       setIsSubmitting(false)
     }
   }
-  return (
- <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+
+return (
+  <div className="flex justify-center items-center min-h-screen bg-gray-900 px-4">
+   <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="w-full max-w-md p-8 space-y-8 bg-white/10 backdrop-blur-md rounded-xl shadow-2xl border border-white/20"
+      >        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-center"
+        >
+          <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
             Join True Feedback
           </h1>
-          <p className="mb-4">Sign up to start your anonymous adventure</p>
-        </div>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              name="username"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <Input
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      debouncedUsername(e.target.value);
-                    }}
-                  />
-                  {isCheckingUsername && <Loader2 className="animate-spin" />}
-                  {!isCheckingUsername && usernameMessage && (
-                    <p
-                      className={`text-sm ${
-                        usernameMessage === 'Username is unique'
-                          ? 'text-green-500'
-                          : 'text-red-500'
-                      }`}
-                    >
-                      {usernameMessage}
-                    </p>
-                  )}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="email"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <Input {...field} name="email" />
-                  <p className='text-gray-400 text-sm'>We will send you a verification code</p>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="password"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" {...field} name="password" />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className='w-full' disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Please wait
-                </>
-              ) : (
-                'Sign Up'
-              )}
-            </Button>
-          </form>
-        </Form>
-        <div className="text-center mt-4">
-          <p>
-            Already a member?{' '}
-            <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
-              Sign in
-            </Link>
+          <p className="text-gray-300 text-sm">
+            Sign up to start your anonymous adventure
           </p>
-        </div>
+        </motion.div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            name="username"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Username</FormLabel>
+                <Input
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    debouncedUsername(e.target.value);
+                  }}
+                  className="bg-gray-800 text-white border-gray-600"
+                />
+                {isCheckingUsername && <Loader2 className="animate-spin text-white mt-1" />}
+                {!isCheckingUsername && usernameMessage && (
+                  <p
+                    className={`text-sm mt-1 ${
+                      usernameMessage === 'Username is unique'
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  >
+                    {usernameMessage}
+                  </p>
+                )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="email"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Email</FormLabel>
+                <Input
+                  {...field}
+                  className="bg-gray-800 text-white border-gray-600"
+                />
+                <p className="text-gray-400 text-xs mt-1">
+                  We will send you a verification code
+                </p>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="password"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Password</FormLabel>
+                <Input
+                  type="password"
+                  {...field}
+                  className="bg-gray-800 text-white border-gray-600"
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90 text-white"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </>
+            ) : (
+              'Sign Up'
+            )}
+          </Button>
+        </form>
+      </Form>
+
+      <div className="text-center mt-4">
+        <p className="text-sm text-gray-400">
+          Already a member?{' '}
+          <Link href="/sign-in" className="text-blue-400 hover:text-blue-500 underline">
+            Sign in
+          </Link>
+        </p>
       </div>
-    </div>
-  );
+    </motion.div>
+  </div>
+);
+
+
 }
 
 export default page;

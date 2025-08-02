@@ -3,6 +3,7 @@ import { Interface } from "readline";
 
 
 export interface Message extends Document{
+    _id: string,
     content: string;
     createdAt: Date
 }

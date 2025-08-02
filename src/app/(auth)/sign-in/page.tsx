@@ -8,32 +8,24 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { signInSchema } from "@/Schemas/signInSchema"
-import axios, { AxiosError } from "axios"
-import { ApiResponse } from "@/types/ApiResponse"
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Loader2 } from 'lucide-react';
 import { signIn } from "next-auth/react"
+import { motion } from "framer-motion"
 
 
 const page = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  toast("Event has been created.")
   const router = useRouter()
 
-  //zod implementation
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       identifier: '',
       password: ''
     }
-
   })
-
-
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     const res = await signIn('credentials', {
@@ -50,29 +42,53 @@ const page = () => {
 
     if (res?.url) {
       router.replace('/dashboard')
-
     }
-
   }
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-            Join True Feedback
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-[#0f172a] to-black">
+
+  {/* Background Anonymous Logo */}
+      <div className="absolute inset-0 z-0 opacity-10">
+        <img
+          src="/anonymous-bg.jpg" // Add your anonymous logo here (place in /public folder)
+          alt="Anonymous Logo"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+
+         <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="w-full max-w-md p-8 space-y-8 bg-white/10 backdrop-blur-md rounded-xl shadow-2xl border border-white/20"
+      >        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-center"
+        >
+          <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+            True Feedback 🔥
           </h1>
-          <p className="mb-4">Sign up to start your anonymous adventure</p>
-        </div>
+          <p className="text-gray-300 text-sm">
+             Sign in to start your anonymous experience.
+          </p>
+        </motion.div>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-
             <FormField
               name="identifier"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email/Username</FormLabel>
-                  <Input {...field} name="email/username" />
+                  <FormLabel className="text-white">Email / Username</FormLabel>
+                  <Input
+                    {...field}
+                    className="bg-[#1e293b] text-white border border-gray-700 focus:ring-purple-500"
+                  />
                   <FormMessage />
                 </FormItem>
               )}
@@ -83,28 +99,38 @@ const page = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" {...field} name="password" />
+                  <FormLabel className="text-white">Password</FormLabel>
+                  <Input
+                    type="password"
+                    {...field}
+                    className="bg-[#1e293b] text-white border border-gray-700 focus:ring-purple-500"
+                  />
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className='w-full' disabled={isSubmitting}>
-             Signin
+
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 rounded-xl shadow-md transition-all duration-300"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Signing In..." : "Sign In"}
             </Button>
           </form>
         </Form>
-        <div className="text-center mt-4">
-          <p>
-            Not a member? Create an Account{' '}
-            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
-              Sign Up
+
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-400">
+            Not a member?{" "}
+            <Link href="/sign-up" className="text-purple-400 hover:underline">
+              Create an account
             </Link>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
-  );
+  )
 }
 
 export default page;
