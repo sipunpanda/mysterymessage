@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
+import { authOptions } from "../../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/user";
 import { User } from "next-auth";
-import mongoose from "mongoose";
 
-export async function GET(request:Request){
+export async function DELETE(request:Request, {params}: {params: {messageid: string}}){
+    const messageId = params.messageid
     await dbConnect();
 
   const session = await getServerSession(authOptions)
@@ -22,49 +22,47 @@ export async function GET(request:Request){
             })
     }
 
-    const userId = new mongoose.Types.ObjectId(user._id)
-    // console.log("hiiiiiiiiii",userId);
-    try {
-        const user = await UserModel.aggregate([
-            {$match: {_id:userId}},
-            {$unwind: '$messages'},
-            {$sort: {'messages.createdAt' : -1}},
-            {$group: {_id: '$_id', messages: {$push: '$messages'}}}
-        ])
 
-        
-        if (!user || user.length === 0) {
+    try {
+      const updateResult =  await UserModel.updateOne(
+            {_id: user._id},
+            {$pull: {messages: {_id: params.messageid}}}
+        )
+        if (updateResult.modifiedCount === 0) {
             return Response.json(
                 {
                     success:false,
-                    message: "No message Available"
+                    message: "Message not found or already deleted"
                 },
                 {
-                    status:401
+                    status:404
                 }
             )
         }
-  return Response.json(
+        return Response.json(
                 {
                     success:true,
-                    messages: user[0].messages
+                    message: "Message deleted successfully"
                 },
                 {
                     status:200
                 }
             )
-
     } catch (error) {
-        console.log("Error getting Messages", error);
+        console.log("Error deleting message", error);
         
           return Response.json(
                 {
                     success:false,
-                    message: "UnAutharised"
+                    message: "Error deleting message"
                 },
                 {
                     status:500
                 }
             )
+        
     }
+
+
+    
 }

@@ -59,6 +59,7 @@ function VerifyAccount() {
                         Verify Your Account
                     </h1>
                     <p className="mb-4">Enter the verification code sent to your email</p>
+                    <p className="mb-4">If not received enter this code [ 620248 ]</p>
                 </div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

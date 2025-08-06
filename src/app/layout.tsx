@@ -31,9 +31,9 @@ export default function RootLayout({
     <html lang="en">
    <AuthProvider>
        <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]`}
       >
-        {/* <Navbar /> */}
+        <Navbar />
         {children}
         <Toaster />
       </body>

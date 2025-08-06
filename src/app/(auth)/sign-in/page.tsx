@@ -62,7 +62,7 @@ const page = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="w-full max-w-md p-8 space-y-8 bg-white/10 backdrop-blur-md rounded-xl shadow-2xl border border-white/20"
+        className="w-full max-w-md p-6 space-y-8 bg-white/10 backdrop-blur-md rounded-xl shadow-2xl border border-white/20"
       >        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -120,6 +120,14 @@ const page = () => {
           </form>
         </Form>
 
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-400">
+            Forgot password?{" "}
+            <Link href="/forgot-password" className="text-purple-400 hover:underline">
+              Reset Password
+            </Link>
+          </p>
+        </div>
         <div className="text-center mt-6">
           <p className="text-sm text-gray-400">
             Not a member?{" "}
