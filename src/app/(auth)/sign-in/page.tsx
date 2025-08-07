@@ -15,7 +15,7 @@ import { signIn } from "next-auth/react"
 import { motion } from "framer-motion"
 
 
-const page = () => {
+const Page = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
 
@@ -28,6 +28,7 @@ const page = () => {
   })
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
+    setIsSubmitting(true)
     const res = await signIn('credentials', {
       redirect: false,
       identifier: data.identifier,
@@ -44,6 +45,7 @@ const page = () => {
       router.replace('/dashboard')
     }
   }
+  setIsSubmitting(false)
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-[#0f172a] to-black">
@@ -141,4 +143,4 @@ const page = () => {
   )
 }
 
-export default page;
+export default Page;
