@@ -30,6 +30,18 @@ export async function sendMail({
 }) {
   try {
     const isVerified = await transporter.verify();
+    if (!isVerified) {
+      console.error('SMTP server is not verified');
+      return Response.json(
+        {
+          success: false,
+          message: 'SMTP server is not verified',
+        },
+        {
+          status: 500,
+        }
+      );
+    }
   } catch (error) {
     console.error('Something Went Wrong', SMTP_SERVER_USERNAME, SMTP_SERVER_PASSWORD, error);
     return;

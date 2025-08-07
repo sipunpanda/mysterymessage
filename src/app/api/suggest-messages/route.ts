@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-export async function POST(req: Request) {
+export async function POST() {
     try {
         // const { messages } = await req.json();
         const prompt =

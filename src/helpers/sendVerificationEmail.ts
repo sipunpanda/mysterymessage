@@ -19,7 +19,7 @@ await resend.emails.send({
 
         return {success:true, message:"verification email send successfully"}
     } catch (emailError) {
-        console.log("Error sending verification email", error);
+        console.log("Error sending verification email", emailError);
         return {success:false, message:"Failed to send verification email"}
     }
 }

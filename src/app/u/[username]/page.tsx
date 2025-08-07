@@ -142,7 +142,7 @@ export default function SendMessage() {
             variant="outline"
             className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
             onClick={fetchSuggestedMessages}
-            disabled={true}
+            disabled={true || isSuggestLoading}
           >
             Generate Suggestions
           </Button>

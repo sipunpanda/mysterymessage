@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose"
-import { Interface } from "readline";
+
 
 
 export interface Message extends Document{

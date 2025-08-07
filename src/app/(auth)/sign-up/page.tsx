@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2 } from 'lucide-react';
 import { motion } from "framer-motion"
 
-const page = () => {
+const Page = () => {
   const [username, setUsername] = useState('')
   const [usernameMessage, setUsernameMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -215,4 +215,4 @@ return (
 
 }
 
-export default page;
+export default Page;
