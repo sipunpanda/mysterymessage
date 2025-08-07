@@ -119,7 +119,7 @@ const page = () => {
             </Button>
           </form>
         </Form>
-
+{/* 
         <div className="text-center mt-6">
           <p className="text-sm text-gray-400">
             Forgot password?{" "}
@@ -127,7 +127,7 @@ const page = () => {
               Reset Password
             </Link>
           </p>
-        </div>
+        </div> */}
         <div className="text-center mt-6">
           <p className="text-sm text-gray-400">
             Not a member?{" "}
