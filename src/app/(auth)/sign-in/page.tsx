@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { signIn } from "next-auth/react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 
 const Page = () => {
@@ -44,20 +45,23 @@ const Page = () => {
     if (res?.url) {
       router.replace('/dashboard')
     }
-  }
-  setIsSubmitting(false)
+    
+    setIsSubmitting(false)
+    }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-[#0f172a] to-black">
 
   {/* Background Anonymous Logo */}
-      <div className="absolute inset-0 z-0 opacity-10">
-        <img
-          src="/anonymous-bg.jpg" // Add your anonymous logo here (place in /public folder)
-          alt="Anonymous Logo"
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div className="absolute inset-0 z-0 opacity-10">
+  <Image
+    src="/anonymous-bg.jpg" // file should be inside /public
+    alt="Anonymous Logo"
+    fill   // replaces w-full h-full
+    className="object-cover"
+    priority // optional, ensures it's loaded fast
+  />
+</div>
 
 
          <motion.div

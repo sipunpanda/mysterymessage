@@ -64,7 +64,7 @@ const Page = () => {
     }
 
     checkUsernameUnique()
-  }, [username])
+  }, [username, debouncedUsername])
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true)
