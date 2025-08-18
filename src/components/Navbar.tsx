@@ -25,9 +25,7 @@ const Navbar = () => {
  <span className="mr-4">
               Welcome, {user.username || user.email}
             </span>    <Button onClick={()=>{
-       signOut({
-  callbackUrl: `${window.location.origin}/` // dynamic, works both local & prod
-})
+        signOut({ callbackUrl: "https://truefeedback-app.netlify.app/" })
     }}>Logout</Button>
     </>
 ):(
