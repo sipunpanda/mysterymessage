@@ -25,7 +25,7 @@ const Navbar = () => {
  <span className="mr-4">
               Welcome, {user.username || user.email}
             </span>    <Button onClick={()=>{
-        signOut({ callbackUrl: "/" }) 
+        signOut({ callbackUrl: "https://your-netlify-site.netlify.app" })
     }}>Logout</Button>
     </>
 ):(
